@@ -1,4 +1,5 @@
 package org.romil.processing;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -13,6 +14,110 @@ import net.htmlparser.jericho.StartTag;
 import net.htmlparser.jericho.TextExtractor;
 
 public class JerichoExtractor {
+	URL url;
+	String text;
+	String title;
+	String discription;
+	String keywords;
+	
+	public JerichoExtractor() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public JerichoExtractor(URL url){
+		this.url=url;
+
+		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
+		System.setProperty("http.proxyPort", "8080");
+		MicrosoftConditionalCommentTagTypes.register();
+		PHPTagTypes.register();
+		PHPTagTypes.PHP_SHORT.deregister(); // remove PHP short tags for this example otherwise they override processing instructions
+		MasonTagTypes.register();
+		try {
+			Source source=new Source(url);
+			source.fullSequentialParse();
+			text= source.getTextExtractor().setIncludeAttributes(true).toString();
+			title = getTitle(source);
+			keywords = getMetaValue(source, "keywords");
+			discription = getMetaValue(source, "description");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public String getText(URL url){
+		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
+		System.setProperty("http.proxyPort", "8080");
+		MicrosoftConditionalCommentTagTypes.register();
+		PHPTagTypes.register();
+		PHPTagTypes.PHP_SHORT.deregister(); // remove PHP short tags for this example otherwise they override processing instructions
+		MasonTagTypes.register();
+		try {
+			Source source=new Source(url);
+			source.fullSequentialParse();
+			return source.getTextExtractor().setIncludeAttributes(true).toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getTitle(URL url){
+		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
+		System.setProperty("http.proxyPort", "8080");
+		MicrosoftConditionalCommentTagTypes.register();
+		PHPTagTypes.register();
+		PHPTagTypes.PHP_SHORT.deregister(); // remove PHP short tags for this example otherwise they override processing instructions
+		MasonTagTypes.register();
+		try {
+			Source source=new Source(url);
+			source.fullSequentialParse();
+			return getTitle(source);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getDescription(URL url){
+		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
+		System.setProperty("http.proxyPort", "8080");
+		MicrosoftConditionalCommentTagTypes.register();
+		PHPTagTypes.register();
+		PHPTagTypes.PHP_SHORT.deregister(); // remove PHP short tags for this example otherwise they override processing instructions
+		MasonTagTypes.register();
+		try {
+			Source source=new Source(url);
+			source.fullSequentialParse();
+			return getMetaValue(source, "description");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getKeywords(URL url){
+		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
+		System.setProperty("http.proxyPort", "8080");
+		MicrosoftConditionalCommentTagTypes.register();
+		PHPTagTypes.register();
+		PHPTagTypes.PHP_SHORT.deregister(); // remove PHP short tags for this example otherwise they override processing instructions
+		MasonTagTypes.register();
+		try {
+			Source source=new Source(url);
+			source.fullSequentialParse();
+			return getMetaValue(source, "keywords");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public static void main(String[] args) throws Exception {
 		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
 		System.setProperty("http.proxyPort", "8080");

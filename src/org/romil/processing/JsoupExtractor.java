@@ -1,6 +1,7 @@
 package org.romil.processing;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -10,6 +11,22 @@ import org.jsoup.nodes.Node;
 import cmu.arktweetnlp.Tagger.TaggedToken;
 
 public class JsoupExtractor {
+	public String getText(URL url){
+		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
+		System.setProperty("http.proxyPort", "8080");
+		Document doc;
+		try {
+			doc = Jsoup.connect(url.toString()).get();
+			removeComments(doc); 
+			String text = doc.body().text();
+			return text;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static void main(String[] args) throws IOException {
 		System.setProperty("http.proxyHost", "proxy.iiit.ac.in");
 		System.setProperty("http.proxyPort", "8080");
@@ -35,7 +52,7 @@ public class JsoupExtractor {
 				removeComments(child);
 				i++;
 			}
-		} //To change body of generated methods, choose Tools | Templates.
+		} 
 	}
 
 }
